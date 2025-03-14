@@ -2,6 +2,27 @@
 
 A modern, full-stack cannabis delivery platform with an AI-powered chatbot assistant.
 
+---
+
+> 👋 **New to the project?** Jump to our [Setup Guide](#-setup-guide) to get started!
+
+---
+
+## 📑 Table of Contents
+1. [Features](#-features)
+2. [Technical Stack](#️-technical-stack)
+3. [Security Features](#-security-features)
+4. [Mobile Responsiveness](#-mobile-responsiveness)
+5. [Design System](#-design-system)
+6. [State Management](#-state-management)
+7. [Location Services](#-location-services)
+8. [Setup Guide](#-setup-guide)
+9. [Development](#-development)
+10. [Documentation](#-documentation)
+11. [Contributing](#-contributing)
+12. [License](#-license)
+13. [Acknowledgments](#-acknowledgments)
+
 ## 🚀 Features
 
 ### For Customers
@@ -114,52 +135,187 @@ A modern, full-stack cannabis delivery platform with an AI-powered chatbot assis
 - Route optimization
 - Address verification
 
-## 💻 Development
+---
 
+# 📖 Setup Guide
+
+## System Requirements Checklist
+
+Before starting, ensure you have:
+
+- [ ] Node.js (version 18 or higher)
+- [ ] npm (comes with Node.js)
+- [ ] Git
+- [ ] Git LFS
+- [ ] A code editor (VS Code recommended)
+- [ ] A modern web browser
+
+To verify your setup:
 ```bash
+node --version    # Should be 18 or higher
+npm --version     # Should be 8 or higher
+git --version     # Should be 2.34 or higher
+git lfs --version # Should be installed
+```
+
+## 🗂️ Project Structure
+
+```
+GrassApp/
+├── grassapp-web/          # Main customer-facing application
+│   ├── public/           # Static files
+│   ├── src/             # Source code
+│   ├── package.json     # Dependencies
+│   └── .env.example     # Example environment variables
+│
+├── sun-admin/           # Admin dashboard application
+│   ├── src/            # Source code
+│   ├── public/         # Static files
+│   └── package.json    # Dependencies
+│
+└── shared-types/       # Shared TypeScript definitions
+    ├── src/           # Source code
+    └── package.json   # Dependencies
+```
+
+## 🚀 Installation Steps
+
+### 1. Clone & Setup
+```bash
+# Clone the repository
+git clone https://github.com/WaterVibes/GrassApp.git
+cd GrassApp
+
+# Install Git LFS
+# Windows (using Chocolatey):
+choco install git-lfs
+# OR Mac:
+brew install git-lfs
+# OR Linux:
+sudo apt install git-lfs  # Ubuntu/Debian
+sudo yum install git-lfs  # CentOS/RHEL
+
+# Initialize Git LFS
+git lfs install
+```
+
+### 2. Set Up Shared Types
+```bash
+# Navigate to shared-types
+cd shared-types
+
 # Install dependencies
 npm install
 
-# Run development server
-npm run dev
-
-# Run Budz platform
-npm run dev:budz
-
-# Build for production
+# Build the package
 npm run build
 ```
 
-## 🌐 Environment Variables
+### 3. Set Up GrassApp Web
+```bash
+# Navigate to grassapp-web
+cd ../grassapp-web
 
-```env
-NEXT_PUBLIC_API_URL=your_api_url
-NEXT_PUBLIC_WEBSOCKET_URL=your_websocket_url
-NEXT_PUBLIC_MAPBOX_TOKEN=your_mapbox_token
+# Install dependencies
+npm install
+
+# Copy environment file
+cp .env.example .env.local
 ```
 
-## 📚 Documentation
+Edit `.env.local` with your values:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_WS_URL=ws://localhost:8000
+NEXTAUTH_URL=http://localhost:3006
+NEXTAUTH_SECRET=your-secret-key-here
+NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
+NEXT_PUBLIC_GOOGLE_MAPS_KEY=your-google-maps-key
+```
 
-- [API Documentation](docs/api.md)
-- [Component Library](docs/components.md)
-- [State Management](docs/state.md)
-- [WebSocket Events](docs/websocket.md)
+### 4. Set Up Sun Admin
+```bash
+# Navigate to sun-admin
+cd ../sun-admin
 
-## 🤝 Contributing
+# Install dependencies
+npm install
+```
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+## 🏃‍♂️ Running the Applications
 
-## 📄 License
+1. **Start GrassApp Web** (in one terminal):
+   ```bash
+   cd grassapp-web
+   npm run dev
+   # Available at http://localhost:3006
+   ```
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+2. **Start Sun Admin** (in another terminal):
+   ```bash
+   cd sun-admin
+   npm run dev
+   # Available at http://localhost:3000
+   ```
 
-## 🙏 Acknowledgments
+## ✅ Verification Checklist
 
-- MapLibre GL for mapping
-- Framer Motion for animations
-- TailwindCSS for styling
-- Next.js team for the framework 
+### GrassApp Web
+- [ ] Homepage loads (http://localhost:3006)
+- [ ] Map displays correctly
+- [ ] Dispensary listings appear
+- [ ] Login/Signup forms work
+
+### Sun Admin
+- [ ] Dashboard loads (http://localhost:3000)
+- [ ] Analytics graphs display
+- [ ] Order management works
+- [ ] Real-time updates appear
+
+## ❗ Troubleshooting
+
+### Common Issues
+
+1. **Module Not Found**
+   ```bash
+   rm -rf node_modules
+   npm install
+   ```
+
+2. **Port In Use**
+   ```bash
+   # Windows
+   netstat -ano | findstr :3006
+   taskkill /PID <PID> /F
+
+   # Mac/Linux
+   lsof -i :3006
+   kill -9 <PID>
+   ```
+
+3. **Environment Variables**
+   - Check `.env.local` exists
+   - No spaces around = signs
+   - All variables set
+
+4. **Git LFS Issues**
+   ```bash
+   git lfs uninstall
+   git lfs install
+   git lfs pull
+   ```
+
+### Still Having Problems?
+
+1. Check browser console (F12)
+2. Check terminal errors
+3. Verify environment variables
+4. Check dependencies
+5. Clear browser cache
+6. Verify Node.js version
+
+## 📞 Support
+
+- GitHub Issues: [Create an issue](https://github.com/WaterVibes/GrassApp/issues)
+- Email: support@grassapp.com
+- Documentation: [View Docs](docs/)
