@@ -1,0 +1,18 @@
+{
+  "name": "@grassapp/shared-types",
+  "version": "1.0.0",
+  "description": "Shared types and interfaces for GrassApp ecosystem",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.7.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/socket.io-client": "^3.0.0"
+  }
+} 
