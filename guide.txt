@@ -1,0 +1,193 @@
+**GrassApp Development: Step-by-Step Guide**
+
+### **Phase 1: Web App Development (Mobile-Responsive)**
+The first phase focuses on building the **GrassApp web platform** before moving to mobile apps. The web app must be fully functional on both **desktop and mobile browsers**.
+
+---
+### **Step 1: Set Up the Web App Framework**
+#### **Goal:** Create the foundational frontend structure for GrassApp.
+#### **Tasks:**
+1. **Initialize a Next.js Project (Recommended for SEO & SSR)**
+   ```bash
+   npx create-next-app@latest grassapp-web
+   cd grassapp-web
+   npm install
+   ````
+2. **Install Required Dependencies**
+   ```bash
+   npm install axios tailwindcss @reduxjs/toolkit react-redux react-icons react-query next-auth
+   ```
+3. **Configure TailwindCSS**
+   ```bash
+   npx tailwindcss init -p
+   ```
+   - Modify `tailwind.config.js` to include dark mode support:
+     ```js
+     module.exports = {
+       darkMode: 'class',
+       content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+       theme: {
+         extend: {},
+       },
+       plugins: [],
+     };
+     ```
+4. **Set Up Global Styles**
+   - Update `styles/globals.css` to include base styles and font imports.
+
+---
+### **Step 2: Implement Proxy Server API Integration**
+#### **Goal:** Fetch and display dispensary data from our proxy server.
+#### **Tasks:**
+1. **Connect Web App to Proxy Server**
+   - Modify `next.config.js` to set up API routes:
+     ```js
+     module.exports = {
+       env: {
+         API_URL: "https://proxy.grassapp.com",
+       },
+     };
+     ```
+2. **Create API Calls to Fetch Dispensary Data**
+   - Create `utils/api.js`:
+     ```js
+     import axios from "axios";
+     
+     const API_URL = process.env.API_URL;
+     
+     export const fetchDispensaries = async () => {
+       const response = await axios.get(`${API_URL}/dispensaries`);
+       return response.data;
+     };
+     ```
+3. **Display Dispensary Listings on Home Page**
+   - Modify `pages/index.js`:
+     ```js
+     import { useEffect, useState } from "react";
+     import { fetchDispensaries } from "../utils/api";
+     
+     export default function Home() {
+       const [dispensaries, setDispensaries] = useState([]);
+       
+       useEffect(() => {
+         fetchDispensaries().then(setDispensaries);
+       }, []);
+       
+       return (
+         <div className="min-h-screen bg-black text-white p-4">
+           <h1 className="text-3xl font-bold">GrassApp</h1>
+           <div className="grid grid-cols-2 gap-4 mt-4">
+             {dispensaries.map((dispensary) => (
+               <div key={dispensary.id} className="bg-gray-800 p-4 rounded-xl">
+                 <h2 className="text-lg">{dispensary.name}</h2>
+               </div>
+             ))}
+           </div>
+         </div>
+       );
+     }
+     ```
+
+---
+### **Step 3: Implement Cart & Checkout System**
+#### **Goal:** Users can add items to a cart and proceed to checkout.
+#### **Tasks:**
+1. **Set Up Redux for Cart Management**
+   - Create `store/cartSlice.js`:
+     ```js
+     import { createSlice } from "@reduxjs/toolkit";
+     
+     const initialState = {
+       cart: [],
+     };
+     
+     export const cartSlice = createSlice({
+       name: "cart",
+       initialState,
+       reducers: {
+         addItem: (state, action) => {
+           state.cart.push(action.payload);
+         },
+         removeItem: (state, action) => {
+           state.cart = state.cart.filter(item => item.id !== action.payload);
+         },
+       },
+     });
+     
+     export const { addItem, removeItem } = cartSlice.actions;
+     export default cartSlice.reducer;
+     ```
+   - Update `store/index.js`:
+     ```js
+     import { configureStore } from "@reduxjs/toolkit";
+     import cartReducer from "./cartSlice";
+     
+     export const store = configureStore({
+       reducer: {
+         cart: cartReducer,
+       },
+     });
+     ```
+2. **Create a Cart Page (`pages/cart.js`)**
+   ```js
+   import { useSelector, useDispatch } from "react-redux";
+   import { removeItem } from "../store/cartSlice";
+   
+   export default function Cart() {
+       const cart = useSelector((state) => state.cart.cart);
+       const dispatch = useDispatch();
+   
+       return (
+           <div className="min-h-screen bg-black text-white p-4">
+               <h1 className="text-3xl font-bold">Cart</h1>
+               {cart.length === 0 && <p>Your cart is empty.</p>}
+               <div className="grid gap-4 mt-4">
+                   {cart.map((item, index) => (
+                       <div key={index} className="bg-gray-800 p-4 rounded-xl">
+                           <h2 className="text-lg">{item.name} - ${item.price}</h2>
+                           <button
+                               className="text-red-400"
+                               onClick={() => dispatch(removeItem(item.id))}
+                           >
+                               Remove
+                           </button>
+                       </div>
+                   ))}
+               </div>
+           </div>
+       );
+   }
+   ```
+
+---
+### **Step 4: Implement Payment System**
+#### **Goal:** Users can pay for orders via **ACH, Crypto, or Card**.
+#### **Tasks:**
+1. **Integrate Stripe for Card Payments**
+   - Install Stripe SDK:
+     ```bash
+     npm install @stripe/stripe-js
+     ```
+   - Set up payment API in `pages/api/payment.js`.
+
+2. **Modify Checkout Page to Handle Payments**
+   - Display total price and **integrate Stripe/ACH checkout**.
+
+---
+### **Step 5: Deploy the Web App**
+#### **Goal:** Make the web app accessible online.
+#### **Tasks:**
+1. **Deploy on Vercel**
+   ```bash
+   npm install -g vercel
+   vercel
+   ```
+2. **Connect to Proxy Server** for **live menu updates**.
+3. **Optimize for Mobile Browsers**.
+
+---
+### **Next Steps: Move to iOS & Android Development**
+Once the web app is fully operational, we transition to **mobile app development using React Native**.
+
+This plan ensures **GrassApp is built step by step with a solid web foundation before expanding to mobile.** 🚀
+

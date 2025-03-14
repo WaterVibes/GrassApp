@@ -1,0 +1,33 @@
+:root {
+  --budz-primary: #00A3FF;
+  --budz-primary-dark: #0082CC;
+  --budz-primary-light: #33B5FF;
+}
+
+.text-budz-primary {
+  color: var(--budz-primary);
+}
+
+.bg-budz-primary {
+  background-color: var(--budz-primary);
+}
+
+.bg-budz-primary\/10 {
+  background-color: rgba(0, 163, 255, 0.1);
+}
+
+.bg-budz-primary\/90 {
+  background-color: rgba(0, 163, 255, 0.9);
+}
+
+.border-budz-primary {
+  border-color: var(--budz-primary);
+}
+
+.hover\:bg-budz-primary\/90:hover {
+  background-color: rgba(0, 163, 255, 0.9);
+}
+
+.hover\:bg-budz-primary\/20:hover {
+  background-color: rgba(0, 163, 255, 0.2);
+} 

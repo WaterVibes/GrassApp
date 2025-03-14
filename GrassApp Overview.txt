@@ -1,0 +1,69 @@
+**GrassApp: Context for Cursor**
+
+### **What is GrassApp?**
+GrassApp is a **cannabis delivery and marketplace platform** that allows users to browse dispensary menus, place orders, and track deliveries in real time. Unlike traditional cannabis marketplaces that rely on third-party platforms like Dutchie or IHeartJane for inventory and checkout, **GrassApp operates an independent proxy server** to fetch real-time dispensary data. This ensures we have **full control over transactions, pricing, and user experience** while avoiding third-party fees and restrictions.
+
+### **What Does GrassApp Do?**
+1. **Fetches Live Dispensary Menus**
+   - Our **proxy server pulls product data directly from dispensary APIs or scrapes menus** from dispensary websites if no API is available.
+   - The system **caches frequently accessed data** to improve speed and reduce server load.
+   
+2. **Handles Cart & Checkout on GrassApp’s Platform**
+   - Instead of redirecting users to Dutchie’s checkout, **GrassApp processes payments internally**.
+   - Users pay **GrassApp first**, and we later **settle payments with dispensaries** via ACH or other payment methods.
+   
+3. **Supports Delivery, Pickup, & Scheduling**
+   - Users can **choose between delivery, pickup, or scheduled orders**.
+   - Live driver tracking is integrated for real-time delivery updates.
+
+4. **Provides a Seamless User Experience**
+   - **One consistent checkout process**, even across multiple dispensaries.
+   - Works as both a **web app and mobile-responsive site** before expanding to iOS and Android apps.
+   - Features **promo codes, discounts, and AI-powered recommendations**.
+
+### **Why the Proxy Server?**
+Traditional cannabis marketplaces rely on **Dutchie, IHeartJane, or other providers** for menus, pricing, and checkout. This means dispensaries lose control over:
+- **Pricing adjustments**
+- **Customer relationships**
+- **Order processing**
+- **Payment flexibility**
+
+By **building our own proxy**, GrassApp:
+- **Scrapes and standardizes menu data** without needing Dutchie’s API.
+- **Manages transactions internally** so we keep control of fees and payouts.
+- **Gives dispensaries and users a unified, flexible experience**.
+
+### **Development Plan: Step-by-Step Approach**
+Since GrassApp is a **delivery-first platform**, we will follow this structured development roadmap:
+
+#### **Phase 1: Web App Development (Mobile-Responsive)**
+- The **web app will be the first product** because it’s easier to deploy and iterate on quickly.
+- Users should be able to **access the platform from desktop & mobile browsers** seamlessly.
+- Features to prioritize:
+  1. **Home Page with Dispensary Listings**
+  2. **Proxy Server API Integration** (for fetching menus)
+  3. **Cart & Checkout System**
+  4. **Payment Processing** (ACH, Crypto, Credit/Debit)
+  5. **Real-Time Order Tracking**
+  6. **Driver Management System** (assigning deliveries to drivers)
+
+#### **Phase 2: Mobile App Development (iOS & Android)**
+- Once the web app is **stable and deployed**, we will develop **native iOS & Android apps**.
+- The mobile apps will **reuse the backend API and proxy server**.
+- We will implement **push notifications, in-app tracking, and biometric authentication**.
+
+### **Next Steps for Cursor**
+1. **Set up a Web App Framework**
+   - Use **Next.js (React) or Vue.js** for the frontend.
+   - Ensure it is **mobile-friendly** from the start.
+2. **Build the Proxy Server**
+   - Use **FastAPI (Python) or Node.js (Express)** to fetch dispensary menus.
+   - Implement **caching with Redis**.
+3. **Develop the Cart & Checkout System**
+   - Allow users to add items to their cart **without redirecting to dispensary platforms**.
+   - Implement **GrassApp-controlled payments**.
+4. **Launch Web App Before Expanding to Mobile Apps**
+   - The web app should be **fully functional before moving to native mobile development**.
+
+This approach ensures we **deploy a working product quickly** while maintaining **scalability for future expansion**. Cursor will first **focus on the web version**, ensuring it can be accessed from both **desktop and mobile browsers** before we transition to full mobile apps.
+

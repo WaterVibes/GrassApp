@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pydantic
+redis
+selenium
+webdriver_manager
+requests
